@@ -27,7 +27,7 @@ public class Customer extends Thread {
 
        goForHairCut();
     }
-    
+    // its' syncronized method to allow only 1 thread to be added at a time to prevent race condition
     public synchronized void goForHairCut(){
         shop.add(this);
     }

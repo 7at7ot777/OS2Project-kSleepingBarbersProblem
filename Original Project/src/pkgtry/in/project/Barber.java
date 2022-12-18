@@ -14,24 +14,31 @@ import java.util.logging.Logger;
 public class Barber extends Thread { 
     int barberID; 
     
-    barberShop shop; 
+    barberShop shop;
+    
+    int flag ;
      
     Barber(int id , barberShop shop){ 
-        this.barberID = id; 
-        this.shop = shop; 
+        this.barberID = id; //barber number
+        this.shop = shop;  // shared object 
+        this.flag = 0;  //used to inturrupt the thread
+        
+       
          
     } 
      
      
     @Override 
     public void run(){ 
-        while(true){ 
+      while(true){
             try { 
-                shop.cutHair(this.barberID); 
+                flag = shop.cutHair(this.barberID); 
             } catch (InterruptedException ex) { 
                 Logger.getLogger(Barber.class.getName()).log(Level.SEVERE, null, ex); 
             } 
             
+          if(flag == 1)
+              return;
     } 
     } 
 }

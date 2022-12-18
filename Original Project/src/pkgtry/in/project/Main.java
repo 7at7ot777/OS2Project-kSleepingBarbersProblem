@@ -14,9 +14,10 @@ public class Main {
 
     /**
      * @param args the command line arguments
+     * @throws java.lang.InterruptedException
      */
     public static void main(String[] args) throws InterruptedException {
-       int numOfBarbers,numOfChairs;
+       int numOfBarbers;
        
        int numberOfCustomer = 10 ; 
        
@@ -28,31 +29,50 @@ public class Main {
        System.out.println("Please enter number of barbers : ");
         numOfBarbers = input.nextInt();
         
-        Thread[] threads = new Thread[numOfBarbers];
+        Thread[] BarbersThread = new Thread[numOfBarbers];
+        Thread[] CustThreads = new Thread[numberOfCustomer];
         
-       System.out.println("Please enter number of chairs : ");
-        numOfChairs = input.nextInt();
+     
         
         //making a shop object
-        barberShop shop = new barberShop(numOfBarbers,numOfChairs);
+        barberShop shop = new barberShop(numOfBarbers);
         
-        System.out.println("Openninig the shop with " + numOfBarbers + " of barbers and wih " +numOfChairs + " chairs");
+        System.out.println("Openninig the shop with " + numOfBarbers + " of barbers");
         
+        //creating a barbers thread 
         for(int i = 0 ; i< numOfBarbers ; i++)
         {
             Barber barber = new Barber(i+1,shop);
-            threads[i] = barber;
-            threads[i].start();
+            BarbersThread[i] = barber;
+            BarbersThread[i].start();
         }
         
-        
-        for(int i = 1 ; i<= numberOfCustomer ; i++ ){
-                Customer customer = new Customer(i,shop);
-                Thread t = new Thread(customer);
-                t.start();
-
-                t.join();
+        //creating a customer thread and sleep 500 ms between every 2 threads 
+        for(int i = 0 ; i< numberOfCustomer ; i++ ){
+                Customer customer = new Customer(i+1,shop);
+                CustThreads[i] = customer;
+                CustThreads[i].start();
+                 Thread.sleep(500);
         }
+        //join the two threads 
+        for(int i = 0 ; i < numberOfCustomer ; i++){
+            
+            if(i < numOfBarbers){
+                BarbersThread[i].join();
+            }
+            CustThreads[i].join();
+           
+                
+            
+            
+        }
+        
+//         for(int i = 0 ; i< numOfBarbers ; i++)
+//        {
+//            BarbersThread[i].interrupt();
+//        }
+        
+        System.out.println("########mustn't be printed############");
           
     
            
