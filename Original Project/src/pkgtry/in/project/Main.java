@@ -19,7 +19,7 @@ public class Main {
     public static void main(String[] args) throws InterruptedException {
        int numOfBarbers;
        
-       int numberOfCustomer = 10 ; 
+       int numberOfCustomer  ; 
        
        Scanner input = new Scanner(System.in);
        
@@ -28,6 +28,9 @@ public class Main {
        
        System.out.println("Please enter number of barbers : ");
         numOfBarbers = input.nextInt();
+        
+       System.out.println("Please enter number of customers : ");
+         numberOfCustomer = input.nextInt();
         
         Thread[] BarbersThread = new Thread[numOfBarbers];
         Thread[] CustThreads = new Thread[numberOfCustomer];
