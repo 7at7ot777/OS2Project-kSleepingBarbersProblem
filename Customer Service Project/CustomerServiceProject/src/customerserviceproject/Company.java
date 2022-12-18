@@ -18,14 +18,14 @@ public class Company {
 //    int lostCustomer = 0;
 //    int numberOfChairs;
     int numOfCS;
-    int availableBarbers;
+        int availableCSR;
     List<Client> listCustomer;
     
     Company(int numOfCS ){
         
 //        this.numberOfChairs = numberOfChairs;
         this.numOfCS = numOfCS;
-        this.availableBarbers = numOfCS;
+        this.availableCSR = numOfCS;
         this.listCustomer = new LinkedList<>();
     }
     
@@ -38,8 +38,7 @@ public class Company {
         
         synchronized(listCustomer){
             while(listCustomer.size() == 0){
-                System.out.println("####Barber " +barberID +" is waiting for a customer#### " );
-                System.out.println("####Barber "+ barberID + " sleeps in his chair####");
+                System.out.println("#### The Employee " +barberID +" is waiting for a Call #### " );
                 try {
                     
                  
@@ -50,14 +49,15 @@ public class Company {
                 }
             }   
                  
-                 customer = (Client)((LinkedList<?>)listCustomer).poll();	//takes the first customer from the head of the list for haircut
-                 System.out.println("@@@@customer "+customer.customer_id +" Arrive and wake up the barber " + barberID+"@@@@" );
+                 customer = (Client)((LinkedList<?>)listCustomer).poll();	
+                 System.out.println("@@@@ Customer "+customer.customer_id +" Make a Call and " + barberID+" anwered to this call@@@@" );
             
         }
-        availableBarbers--;
-        System.out.println("---Barber "+barberID+ " is cutting " + customer.customer_id + " ---");
+        availableCSR--;
+        System.out.println("--- Employee "+barberID+ " dealing with customer " + customer.customer_id + " ---");
         Thread.sleep(5000);
-        System.out.println("---Barber "+barberID+ " finishes " + customer.customer_id + " ---");
+        System.out.println("---Employee "+barberID+ " finishes customer " + customer.customer_id + " ---");
+        availableCSR++;
         totalHairCuts++;
         
     return 0;
@@ -70,15 +70,15 @@ public class Company {
         synchronized(listCustomer){
 //        System.out.println("Customer ",customer.);
 
-        if(availableBarbers > 0){
-            //if there are available customers //pop from the list and notify barber thread
-            ((LinkedList<Client>)listCustomer).offer(customer); // add cutomer to the last position of the list
-            listCustomer.notify(); // notify must be put in a synchronized block
+        if(availableCSR > 0){
+            
+            ((LinkedList<Client>)listCustomer).offer(customer); 
+            listCustomer.notify();
         }
         else{
-             System.out.println("Barbers are busy");
-            System.out.println("Customer " + customer.customer_id + " takes a chair and wait for his turn");
-            ((LinkedList<Client>)listCustomer).offer(customer); // add cutomer to the last position of the list
+             System.out.println("The System are busy");
+            System.out.println("Customer " + customer.customer_id + " is listening to the waiting message...");
+            ((LinkedList<Client>)listCustomer).offer(customer);
         }
 
 }
