@@ -19,7 +19,7 @@ public class CustomerServiceProject {
     public static void main(String[] args) throws InterruptedException {
        int numOfCS;
        
-       int numberOfCalls= 30 ; 
+       int numberOfCalls= 1000;
        
        Scanner input = new Scanner(System.in);
        
