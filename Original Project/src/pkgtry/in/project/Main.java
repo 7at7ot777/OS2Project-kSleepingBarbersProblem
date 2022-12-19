@@ -19,7 +19,9 @@ public class Main {
     public static void main(String[] args) throws InterruptedException {
        int numOfBarbers;
        
-       int numberOfCustomer  ; 
+       int numberOfCustomer = 1000 ;
+       
+       int numberOfChairs ; 
        
        Scanner input = new Scanner(System.in);
        
@@ -29,8 +31,8 @@ public class Main {
        System.out.println("Please enter number of barbers : ");
         numOfBarbers = input.nextInt();
         
-       System.out.println("Please enter number of customers : ");
-         numberOfCustomer = input.nextInt();
+       System.out.println("Please enter number of chairs : ");
+         numberOfChairs = input.nextInt();
         
         Thread[] BarbersThread = new Thread[numOfBarbers];
         Thread[] CustThreads = new Thread[numberOfCustomer];
@@ -38,7 +40,7 @@ public class Main {
      
         
         //making a shop object
-        barberShop shop = new barberShop(numOfBarbers);
+        barberShop shop = new barberShop(numOfBarbers, numberOfChairs);
         
         System.out.println("Openninig the shop with " + numOfBarbers + " of barbers");
         

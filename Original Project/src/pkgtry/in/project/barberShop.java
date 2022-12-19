@@ -20,11 +20,15 @@ public class barberShop {
     int numOfBarbers; // used in determinning if all threads are finish all customers 
     int availableBarbers; //used to determine if there are sleeping barbers to notify them and cutting customer hair
     List<Customer> listCustomer; //used to add 
+    int lostCustomer;
+    int numberOfChairs;
     
-    barberShop(int numOfBarbers ){
+    barberShop(int numOfBarbers , int numberOfChairs ){
         this.numOfBarbers = numOfBarbers;
         this.availableBarbers = numOfBarbers;
         this.listCustomer = new LinkedList<>();
+        this.lostCustomer = 0;
+        this.numberOfChairs = numberOfChairs;
     }
 //    used in inturrption threads 
 //    public int finishOrNot(){
@@ -90,34 +94,38 @@ public class barberShop {
 
     public void add(Customer customer){ // add customer to the customer list in case of customers <= number of chairs
         synchronized(listCustomer){
-//        System.out.println("Customer ",customer.);
 
-        if(availableBarbers > 0){
-            //if there are available customers //pop from the list and notify barber thread
+        if(listCustomer.size()==numberOfChairs){
+            lostCustomer++;
+            System.out.println("!!!!! there's no empty chairs !!!!");
+            System.out.println("Number of Lost Customers = " + lostCustomer);
+            
+        }
+        else if(availableBarbers > 0){
             ((LinkedList<Customer>)listCustomer).offer(customer); // add cutomer to the last position of the list
             listCustomer.notify(); // notify must be put in a synchronized block
+            
         }
-        else{
-             System.out.println("Barbers are busy");
+        else{ // barbers are busy and there are empty chairs in the shop
+            System.out.println("Barbers are busy");
             System.out.println("Customer " + customer.customer_id + " takes a chair and wait for his turn");
             ((LinkedList<Customer>)listCustomer).offer(customer); // add cutomer to the last position of the list
+            
         }
 
-//        if(listCustomer.size()==numberOfChairs){
-//            lostCustomer++;
-//            
-//        }
-//        else if(availableBarbers > 0){
+//        System.out.println("Customer ",customer.);
+//
+//        if(availableBarbers > 0){
+//            //if there are available customers //pop from the list and notify barber thread
 //            ((LinkedList<Customer>)listCustomer).offer(customer); // add cutomer to the last position of the list
 //            listCustomer.notify(); // notify must be put in a synchronized block
-//            
 //        }
-//        else{ // barbers are busy and there are empty chairs in the shop
-//            System.out.println("Barbers are busy");
+//        else{
+//             System.out.println("Barbers are busy");
 //            System.out.println("Customer " + customer.customer_id + " takes a chair and wait for his turn");
 //            ((LinkedList<Customer>)listCustomer).offer(customer); // add cutomer to the last position of the list
-//            
 //        }
+
     }
     
 }}
