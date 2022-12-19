@@ -1,0 +1,47 @@
+Barber{
+	function run:
+		while true:
+			shop.cutHair(BarberID)
+}
+Customer {
+	function run:
+		shop.add(custumer)
+}
+BarberShop{
+	function cutHair(BarberID):
+		
+		while ListOfCustomers.size() == 0 :
+			print 'there are no customers in the shop'
+			print 'Barbers' + BarberID + 'is sleeping'
+			Wait()
+		customer = customerList.pop()
+		availableBarbers--
+		print 'Barber ' + BarberID + 'is cutting ' + customer.ID + 'now..'
+		Thread.sleep()
+		availableBarbers++
+	
+	synchronized function add(customer):
+		if AvailableBarbers > 0:
+			listOfCustomers.push(customer)
+			notify()
+		else:
+			listOfCustomers.push(customer)
+	
+	}
+	
+function main():
+		initialize shop
+	for i in numberOfBarbers:
+		BarberThread[i] = new barber(i,shop)
+		BarberThread[i].start()
+	for i in noOFCustomers:
+		CustomerThread[i] = new Customer(i,shop)
+		CustomerThread[i].start()
+		Thread.sleep(random())
+	
+		
+	
+		
+		
+		
+
